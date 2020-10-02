@@ -1,12 +1,12 @@
 #########################################################
-# Environment: INT
+# Environment: DEV
 #
 # Deploy SCALE BaT databases
 #########################################################
 terraform {
   backend "s3" {
     bucket         = "scale-terraform-state"
-    key            = "ccs-scale-infra-db-bat-int"
+    key            = "ccs-scale-infra-db-bat-dev"
     region         = "eu-west-2"
     dynamodb_table = "scale_terraform_state_lock"
     encrypt        = true
@@ -19,7 +19,7 @@ provider "aws" {
 }
 
 locals {
-  environment        = "INT"
+  environment        = "SBX2"
   availability_zones = ["eu-west-2a", "eu-west-2b"]
 }
 
