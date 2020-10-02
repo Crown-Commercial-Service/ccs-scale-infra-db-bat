@@ -10,6 +10,7 @@ resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
 }
 
+# TODO: Tighten Security Group
 resource "aws_security_group" "es" {
   name   = "elasticsearch"
   vpc_id = var.vpc_id
@@ -18,7 +19,6 @@ resource "aws_security_group" "es" {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-
     cidr_blocks = ["0.0.0.0/0"]
   }
 
