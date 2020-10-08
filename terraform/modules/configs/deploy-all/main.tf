@@ -80,4 +80,6 @@ module "elasticsearch" {
   vpc_id                 = data.aws_ssm_parameter.vpc_id.value
   private_app_subnet_ids = split(",", data.aws_ssm_parameter.private_app_subnet_ids.value)
   security_group_ids     = concat(local.cidr_blocks_allowed_external_ccs, local.cidr_blocks_allowed_external_spark, tolist([data.aws_vpc.scale.cidr_block]))
+  es_instance_type       = var.es_instance_type
+  es_ebs_volume_size     = var.es_ebs_volume_size
 }

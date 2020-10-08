@@ -15,9 +15,9 @@ resource "aws_security_group" "es" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = var.security_group_ids
   }
 
@@ -34,12 +34,12 @@ resource "aws_elasticsearch_domain" "main" {
   elasticsearch_version = "7.4"
 
   cluster_config {
-    instance_type = "t2.medium.elasticsearch"
+    instance_type = var.es_instance_type
   }
 
   ebs_options {
     ebs_enabled = true
-    volume_size = 10
+    volume_size = var.es_ebs_volume_size
   }
 
   vpc_options {
@@ -79,11 +79,9 @@ resource "aws_elasticsearch_domain_policy" "main" {
 POLICIES
 }
 
-
 resource "aws_ssm_parameter" "es_url" {
   name      = "/bat/${lower(var.environment)}-elasticsearch-url"
   type      = "String"
   value     = aws_elasticsearch_domain.main.endpoint
   overwrite = true
 }
-
