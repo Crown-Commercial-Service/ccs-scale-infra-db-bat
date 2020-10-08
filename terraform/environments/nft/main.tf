@@ -1,12 +1,12 @@
 #########################################################
-# Environment: INT
+# Environment: NFT
 #
 # Deploy SCALE BaT databases
 #########################################################
 terraform {
   backend "s3" {
     bucket         = "scale-terraform-state"
-    key            = "ccs-scale-infra-db-bat-int"
+    key            = "ccs-scale-infra-db-bat-nft"
     region         = "eu-west-2"
     dynamodb_table = "scale_terraform_state_lock"
     encrypt        = true
@@ -19,7 +19,7 @@ provider "aws" {
 }
 
 locals {
-  environment        = "INT"
+  environment        = "NFT"
   availability_zones = ["eu-west-2a", "eu-west-2b"]
 }
 
@@ -35,4 +35,7 @@ module "deploy" {
   deletion_protection             = false
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
+  backup_retention_period         = 35
+  guided_match_cluster_instances  = length(local.availability_zones)
+  db_instance_class               = "db.t3.large"
 }

@@ -1,4 +1,4 @@
-variable "aws_account_id" {
+variable "vpc_id" {
   type = string
 }
 
@@ -7,6 +7,10 @@ variable "environment" {
 }
 
 variable "availability_zones" {
+  type = list(string)
+}
+
+variable "private_db_subnet_ids" {
   type = list(string)
 }
 
@@ -25,24 +29,20 @@ variable "enabled_cloudwatch_logs_exports" {
 
 variable "backup_retention_period" {
   type    = number
-  default = 1
 }
 
-variable "spree_cluster_instances" {
-  type    = number
-  default = 1
+variable "cluster_instances" {
+  type = number
 }
 
 variable "db_instance_class" {
-  type    = string
-  default = "db.t3.large"
+  type = string
 }
 
-#####################################
-# Override this if you want to create 
-# a new database from a snapshot 
-#####################################
 variable "snapshot_identifier" {
   type = string
-  default = ""
+}
+
+variable "kms_key_id" {
+  type = string
 }
