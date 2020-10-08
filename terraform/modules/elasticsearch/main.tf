@@ -10,7 +10,6 @@ resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
 }
 
-# TODO: Tighten Security Group
 resource "aws_security_group" "es" {
   name   = "elasticsearch"
   vpc_id = var.vpc_id
@@ -19,7 +18,7 @@ resource "aws_security_group" "es" {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.security_group_ids
   }
 
   egress {
@@ -59,6 +58,27 @@ resource "aws_elasticsearch_domain" "main" {
     AppType     = "ES"
   }
 }
+
+resource "aws_elasticsearch_domain_policy" "main" {
+  domain_name = aws_elasticsearch_domain.main.domain_name
+
+  access_policies = <<POLICIES
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "es:*",
+            "Principal": {
+              "AWS": "*"
+            },
+            "Resource": "${aws_elasticsearch_domain.main.arn}/*"
+        }
+    ]
+}
+POLICIES
+}
+
 
 resource "aws_ssm_parameter" "es_url" {
   name      = "/bat/${lower(var.environment)}-elasticsearch-url"

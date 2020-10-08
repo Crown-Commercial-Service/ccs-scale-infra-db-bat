@@ -9,3 +9,7 @@ variable "environment" {
 variable "private_app_subnet_ids" {
   type = list(string)
 }
+
+variable "security_group_ids" {
+  type = list(string)
+}

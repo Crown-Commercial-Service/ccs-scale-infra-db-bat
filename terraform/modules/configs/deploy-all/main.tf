@@ -32,6 +32,32 @@ data "aws_ssm_parameter" "aurora_kms_key_arn" {
   name = "${lower(var.environment)}-aurora-encryption-key"
 }
 
+######################################
+# CIDR ranges for whitelisting
+######################################
+data "aws_ssm_parameter" "cidr_blocks_allowed_external_ccs" {
+  name = "${lower(var.environment)}-cidr-blocks-allowed-external-ccs"
+}
+
+data "aws_ssm_parameter" "cidr_blocks_allowed_external_spark" {
+  name = "${lower(var.environment)}-cidr-blocks-allowed-external-spark"
+}
+
+data "aws_ssm_parameter" "cidr_blocks_allowed_external_cognizant" {
+  name = "${lower(var.environment)}-cidr-blocks-allowed-external-cognizant"
+}
+
+data "aws_vpc" "scale" {
+  id = data.aws_ssm_parameter.vpc_id.value
+}
+
+locals {
+  # Normalised CIDR blocks (accounting for 'none' i.e. "-" as value in SSM parameter)
+  cidr_blocks_allowed_external_ccs       = data.aws_ssm_parameter.cidr_blocks_allowed_external_ccs.value != "-" ? split(",", data.aws_ssm_parameter.cidr_blocks_allowed_external_ccs.value) : []
+  cidr_blocks_allowed_external_spark     = data.aws_ssm_parameter.cidr_blocks_allowed_external_spark.value != "-" ? split(",", data.aws_ssm_parameter.cidr_blocks_allowed_external_spark.value) : []
+  cidr_blocks_allowed_external_cognizant = data.aws_ssm_parameter.cidr_blocks_allowed_external_cognizant.value != "-" ? split(",", data.aws_ssm_parameter.cidr_blocks_allowed_external_cognizant.value) : []
+}
+
 module "spree" {
   source                          = "../../spree"
   environment                     = var.environment
@@ -53,4 +79,5 @@ module "elasticsearch" {
   environment            = var.environment
   vpc_id                 = data.aws_ssm_parameter.vpc_id.value
   private_app_subnet_ids = split(",", data.aws_ssm_parameter.private_app_subnet_ids.value)
+  security_group_ids     = concat(local.cidr_blocks_allowed_external_ccs, local.cidr_blocks_allowed_external_spark, tolist([data.aws_vpc.scale.cidr_block]))
 }
