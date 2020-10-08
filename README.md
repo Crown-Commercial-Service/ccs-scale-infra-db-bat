@@ -15,7 +15,7 @@ Ensure that the following SSM parameters have been configured in AWS:
 /bat/{env}-spree-db-master-password
 
 /bat/{env}-spree-db-app-username
-/bat/{env}-spree-db-app-username
+/bat/{env}-spree-db-app-password
 ```
 
 ### Post Create
