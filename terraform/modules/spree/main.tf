@@ -65,6 +65,11 @@ resource "aws_kms_key" "spree" {
   }
 }
 
+resource "aws_kms_alias" "spree" {
+  name          = "alias/spree-db-key"
+  target_key_id = aws_kms_key.spree.key_id
+}
+
 resource "aws_rds_cluster" "default" {
   cluster_identifier              = "ccs-eu2-${lower(var.environment)}-db-spree"
   availability_zones              = var.availability_zones

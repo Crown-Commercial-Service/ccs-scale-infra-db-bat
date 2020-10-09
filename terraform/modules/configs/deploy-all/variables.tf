@@ -38,11 +38,21 @@ variable "db_instance_class" {
   default = "db.t3.large"
 }
 
+variable "es_instance_type" {
+  type    = string
+  default = "t2.medium.elasticsearch"
+}
+
+variable "es_ebs_volume_size" {
+  type    = number
+  default = 10
+}
+
 #####################################
 # Override this if you want to create 
 # a new database from a snapshot 
 #####################################
 variable "snapshot_identifier" {
-  type = string
+  type    = string
   default = ""
 }
