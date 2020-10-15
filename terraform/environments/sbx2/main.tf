@@ -35,4 +35,5 @@ module "deploy" {
   deletion_protection             = false
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
+  # snapshot_identifier             = "arn:aws:rds:eu-west-2:464702836434:cluster-snapshot:sbx1-initial-seeded-db-no-products-copy"
 }

@@ -54,21 +54,21 @@ data "aws_ssm_parameter" "master_password" {
   with_decryption = true
 }
 
-resource "aws_kms_key" "spree" {
-  description = "Key for Spree Postgres Aurora Cluster - ccs-eu2-${lower(var.environment)}-db-spree"
-
-  tags = {
-    Project     = module.globals.project_name
-    Environment = upper(var.environment)
-    Cost_Code   = module.globals.project_cost_code
-    AppType     = "ECS"
-  }
-}
-
-resource "aws_kms_alias" "spree" {
-  name          = "alias/spree-db-key"
-  target_key_id = aws_kms_key.spree.key_id
-}
+# resource "aws_kms_key" "spree" {
+#   description = "Key for Spree Postgres Aurora Cluster - ccs-eu2-${lower(var.environment)}-db-spree"
+#
+#   tags = {
+#     Project     = module.globals.project_name
+#     Environment = upper(var.environment)
+#     Cost_Code   = module.globals.project_cost_code
+#     AppType     = "ECS"
+#   }
+# }
+#
+# resource "aws_kms_alias" "spree" {
+#   name          = "alias/spree-db-key"
+#   target_key_id = aws_kms_key.spree.key_id
+# }
 
 resource "aws_rds_cluster" "default" {
   cluster_identifier              = "ccs-eu2-${lower(var.environment)}-db-spree"

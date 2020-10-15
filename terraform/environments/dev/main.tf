@@ -35,4 +35,5 @@ module "deploy" {
   deletion_protection             = false
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
+  snapshot_identifier             = "arn:aws:rds:eu-west-2:582571900626:cluster-snapshot:scale-bat-spree-seeded"
 }
