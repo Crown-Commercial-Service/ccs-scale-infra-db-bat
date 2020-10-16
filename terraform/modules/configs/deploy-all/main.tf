@@ -71,8 +71,7 @@ module "spree" {
   cluster_instances               = var.spree_cluster_instances
   db_instance_class               = var.db_instance_class
   snapshot_identifier             = var.snapshot_identifier
-  # kms_key_id                      = data.aws_ssm_parameter.aurora_kms_key_arn.value
-  kms_key_id = "arn:aws:kms:eu-west-2:016776319009:key/a9cd5472-9afc-472e-8e15-665695f7a84b"
+  kms_key_id                      = var.kms_cmk_rds_shared
 }
 
 module "elasticsearch" {
