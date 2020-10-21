@@ -49,10 +49,14 @@ variable "es_ebs_volume_size" {
 }
 
 #####################################
-# Override this if you want to create 
-# a new database from a snapshot 
+# Override this if you want to create
+# a new database from a snapshot
 #####################################
 variable "snapshot_identifier" {
   type    = string
   default = ""
+}
+
+variable "kms_cmk_rds_shared" {
+  type = string
 }
