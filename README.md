@@ -35,3 +35,11 @@ Note: the values for {USERNAME} and {PASSWORD} need to match those that have bee
 /bat/{env}-spree-db-app-username
 /bat/{env}-spree-db-app-username
 ```
+
+#### Elasticsearch
+Run the following commands from the Scale bastion host to configure the necessary dynamic indexing parameters in the Elasticsearch domain (replace `[ELASTICSEARCH_URL]`  with the value of 'VPC endpoint' in the AWS Elasticsearch Service console under the domain details in the Overview tab:
+
+```
+curl -XPUT "[ELASTICSEARCH_URL]/_all/_settings" -d '{ "index" : { "mapping.total_fields.limit": 2000} }' -H "Content-Type: application/json"
+curl -XPUT "[ELASTICSEARCH_URL]/_all/_settings" -d '{ "index" : { "max_result_window" : 500000 } }' -H "Content-Type: application/json"
+```
