@@ -40,5 +40,5 @@ module "deploy" {
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
   kms_cmk_rds_shared              = data.aws_ssm_parameter.kms_cmk_rds_shared.value
-  snapshot_identifier             = "arn:aws:rds:eu-west-2:${data.aws_ssm_parameter.aws_account_id.value}:cluster-snapshot:scale-bat-spree-seeded"
+  snapshot_identifier             = "arn:aws:rds:eu-west-2:${data.aws_ssm_parameter.aws_account_id.value}:cluster-snapshot:scale-bat-spree-seeded-with-images"
 }
