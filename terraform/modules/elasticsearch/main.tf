@@ -34,7 +34,8 @@ resource "aws_elasticsearch_domain" "main" {
   elasticsearch_version = "7.4"
 
   cluster_config {
-    instance_type = var.es_instance_type
+    instance_type  = var.es_instance_type
+    instance_count = 2
   }
 
   ebs_options {
