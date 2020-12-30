@@ -18,6 +18,10 @@ variable "es_instance_type" {
   type = string
 }
 
+variable "es_instance_count" {
+  type = number
+}
+
 variable "es_ebs_volume_size" {
   type = number
 }

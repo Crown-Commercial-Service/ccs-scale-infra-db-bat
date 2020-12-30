@@ -40,4 +40,6 @@ module "deploy" {
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
   kms_cmk_rds_shared              = data.aws_ssm_parameter.kms_cmk_rds_shared.value
+  es_instance_type                = "m5.xlarge.elasticsearch"
+  db_instance_class               = "db.r5.xlarge"
 }
