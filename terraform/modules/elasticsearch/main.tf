@@ -35,7 +35,7 @@ resource "aws_elasticsearch_domain" "main" {
 
   cluster_config {
     instance_type  = var.es_instance_type
-    instance_count = 2
+    instance_count = var.es_instance_count
   }
 
   ebs_options {

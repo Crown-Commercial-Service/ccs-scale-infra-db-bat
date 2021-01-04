@@ -41,4 +41,6 @@ module "deploy" {
   enabled_cloudwatch_logs_exports = ["postgresql"]
   kms_cmk_rds_shared              = data.aws_ssm_parameter.kms_cmk_rds_shared.value
   snapshot_identifier             = "arn:aws:rds:eu-west-2:${data.aws_ssm_parameter.aws_account_id.value}:cluster-snapshot:scale-bat-spree-seeded-with-images"
+  es_instance_type                = "m5.large.elasticsearch"
+  db_instance_class               = "db.r5.large"
 }
