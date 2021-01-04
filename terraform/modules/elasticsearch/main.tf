@@ -34,8 +34,13 @@ resource "aws_elasticsearch_domain" "main" {
   elasticsearch_version = "7.4"
 
   cluster_config {
-    instance_type  = var.es_instance_type
-    instance_count = var.es_instance_count
+    instance_type          = var.es_instance_type
+    instance_count         = var.es_instance_count
+    zone_awareness_enabled = true
+
+    zone_awareness_config {
+      availability_zone_count = length(var.private_app_subnet_ids)
+    }
   }
 
   ebs_options {
