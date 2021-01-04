@@ -43,11 +43,6 @@ variable "es_instance_type" {
   default = "t2.medium.elasticsearch"
 }
 
-variable "es_instance_count" {
-  type    = number
-  default = 2
-}
-
 variable "es_ebs_volume_size" {
   type    = number
   default = 10

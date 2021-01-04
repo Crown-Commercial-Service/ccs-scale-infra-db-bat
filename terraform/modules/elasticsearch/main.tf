@@ -35,7 +35,7 @@ resource "aws_elasticsearch_domain" "main" {
 
   cluster_config {
     instance_type          = var.es_instance_type
-    instance_count         = var.es_instance_count
+    instance_count         = length(var.private_app_subnet_ids)
     zone_awareness_enabled = true
 
     zone_awareness_config {
