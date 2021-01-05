@@ -43,4 +43,5 @@ module "deploy" {
   kms_cmk_rds_shared              = data.aws_ssm_parameter.kms_cmk_rds_shared.value
   es_instance_type                = "m5.large.elasticsearch"
   db_instance_class               = "db.r5.large"
+  spree_cluster_instances         = length(local.availability_zones)
 }
