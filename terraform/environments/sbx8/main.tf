@@ -20,7 +20,7 @@ provider "aws" {
 
 locals {
   environment        = "SBX8"
-  availability_zones = ["eu-west-2a", "eu-west-2b"]
+  availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
 }
 
 data "aws_ssm_parameter" "aws_account_id" {
@@ -43,4 +43,5 @@ module "deploy" {
   snapshot_identifier             = "arn:aws:rds:eu-west-2:${data.aws_ssm_parameter.aws_account_id.value}:cluster-snapshot:before-update-01042021"
   es_instance_type                = "m5.xlarge.elasticsearch"
   db_instance_class               = "db.r5.xlarge"
+  spree_cluster_instances         = length(local.availability_zones)
 }
