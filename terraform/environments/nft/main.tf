@@ -20,11 +20,15 @@ provider "aws" {
 
 locals {
   environment        = "NFT"
-  availability_zones = ["eu-west-2a", "eu-west-2b"]
+  availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
 }
 
 data "aws_ssm_parameter" "aws_account_id" {
   name = "account-id-${lower(local.environment)}"
+}
+
+data "aws_ssm_parameter" "kms_cmk_rds_shared" {
+  name = "kms-cmk-rds-shared"
 }
 
 module "deploy" {
@@ -35,7 +39,9 @@ module "deploy" {
   deletion_protection             = false
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
-  backup_retention_period         = 35
-  guided_match_cluster_instances  = length(local.availability_zones)
-  db_instance_class               = "db.t3.large"
+  kms_cmk_rds_shared              = data.aws_ssm_parameter.kms_cmk_rds_shared.value
+  snapshot_identifier             = "arn:aws:rds:eu-west-2:${data.aws_ssm_parameter.aws_account_id.value}:cluster-snapshot:sbx8-spree-seeded"
+  es_instance_type                = "m5.xlarge.elasticsearch"
+  db_instance_class               = "db.r5.xlarge"
+  spree_cluster_instances         = length(local.availability_zones)
 }
