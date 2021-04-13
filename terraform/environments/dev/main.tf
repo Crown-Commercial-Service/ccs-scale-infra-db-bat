@@ -44,4 +44,5 @@ module "deploy" {
   es_instance_type                = "m5.large.elasticsearch"
   db_instance_class               = "db.r5.large"
   spree_cluster_instances         = length(local.availability_zones)
+  backup_retention_period         = 7
 }
