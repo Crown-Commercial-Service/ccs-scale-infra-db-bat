@@ -53,6 +53,15 @@ resource "aws_elasticsearch_domain" "main" {
     security_group_ids = [aws_security_group.es.id]
   }
 
+  domain_endpoint_options {
+    enforce_https       = true
+    tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
+  }
+
+  encrypt_at_rest {
+    enabled = var.encrypt_at_rest
+  }
+
   depends_on = [
     aws_iam_service_linked_role.es,
   ]

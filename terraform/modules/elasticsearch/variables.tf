@@ -21,3 +21,7 @@ variable "es_instance_type" {
 variable "es_ebs_volume_size" {
   type = number
 }
+
+variable "encrypt_at_rest" {
+  type = bool
+}

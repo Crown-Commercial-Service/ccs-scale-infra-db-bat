@@ -82,4 +82,5 @@ module "elasticsearch" {
   security_group_ids     = concat(local.cidr_blocks_allowed_external_ccs, local.cidr_blocks_allowed_external_spark, tolist([data.aws_vpc.scale.cidr_block]))
   es_instance_type       = var.es_instance_type
   es_ebs_volume_size     = var.es_ebs_volume_size
+  encrypt_at_rest        = var.es_encrypt_at_rest
 }
