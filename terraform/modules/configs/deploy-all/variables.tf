@@ -60,3 +60,12 @@ variable "snapshot_identifier" {
 variable "kms_cmk_rds_shared" {
   type = string
 }
+
+#####################################
+# Only available for certain ES 
+# instance types
+#####################################
+variable "es_encrypt_at_rest" {
+  type    = bool
+  default = false
+}

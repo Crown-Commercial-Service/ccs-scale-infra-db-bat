@@ -45,4 +45,5 @@ module "deploy" {
   db_instance_class               = "db.r5.xlarge"
   spree_cluster_instances         = length(local.availability_zones)
   backup_retention_period         = 35
+  es_encrypt_at_rest              = true
 }
