@@ -11,7 +11,8 @@ resource "aws_sns_topic" "alarms" {
 resource "aws_cloudwatch_metric_alarm" "task" {
   alarm_name                = "${lower(var.db_name)}-db-task-alarm"
   comparison_operator       = "LessThanThreshold"
-  evaluation_periods        = "1"
+  evaluation_periods        = "5"
+  datapoints_to_alarm       = "3"
   metric_name               = "CPUUtilization"
   namespace                 = "AWS/RDS"
   period                    = "60"
