@@ -84,3 +84,11 @@ module "elasticsearch" {
   es_ebs_volume_size     = var.es_ebs_volume_size
   encrypt_at_rest        = var.es_encrypt_at_rest
 }
+
+module "cloudwatch-alarms-spree" {
+  source                  = "../../cw-alarms"
+  environment             = var.environment
+  db_cluster_name         = module.spree.db_cluster_name
+  db_name                 = "bat-spree"
+  db_expected_instance_count = length(split(",", data.aws_ssm_parameter.private_db_subnet_ids.value))
+}
