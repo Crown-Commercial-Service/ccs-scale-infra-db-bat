@@ -81,7 +81,6 @@ resource "aws_rds_cluster" "default" {
   master_username                 = data.aws_ssm_parameter.master_username.value
   master_password                 = data.aws_ssm_parameter.master_password.value
   engine                          = "aurora-postgresql"
-  engine_version                  = "11.8"
   apply_immediately               = true
   vpc_security_group_ids          = ["${aws_security_group.allow_postgres_external.id}"]
   deletion_protection             = var.deletion_protection
@@ -118,7 +117,7 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
   instance_class       = var.db_instance_class
   engine               = "aurora-postgresql"
   apply_immediately    = true
-  publicly_accessible  = true
+  publicly_accessible  = false
   db_subnet_group_name = aws_db_subnet_group.spree.name
 }
 
