@@ -30,8 +30,8 @@ resource "aws_security_group" "es" {
 }
 
 resource "aws_elasticsearch_domain" "main" {
-  domain_name           = "scale-eu2-${lower(var.environment)}-es-spree"
-  elasticsearch_version = "7.4"
+  domain_name             = "scale-eu2-${lower(var.environment)}-es-spree"
+  elasticsearch_version   = "7.4"
 
   cluster_config {
     instance_type          = var.es_instance_type
@@ -60,6 +60,10 @@ resource "aws_elasticsearch_domain" "main" {
 
   encrypt_at_rest {
     enabled = var.encrypt_at_rest
+  }
+
+  node_to_node_encryption {
+    enabled = true
   }
 
   depends_on = [
