@@ -30,8 +30,8 @@ resource "aws_security_group" "es" {
 }
 
 resource "aws_elasticsearch_domain" "main" {
-  domain_name             = "scale-eu2-${lower(var.environment)}-es-spree"
-  elasticsearch_version   = "7.4"
+  domain_name           = "scale-eu2-${lower(var.environment)}-es-spree"
+  elasticsearch_version = "7.4"
 
   cluster_config {
     instance_type          = var.es_instance_type
@@ -96,6 +96,10 @@ resource "aws_elasticsearch_domain_policy" "main" {
     ]
 }
 POLICIES
+
+  depends_on = [
+    aws_elasticsearch_domain.main
+  ]
 }
 
 resource "aws_ssm_parameter" "es_url" {
