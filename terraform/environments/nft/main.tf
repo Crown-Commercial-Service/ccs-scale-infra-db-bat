@@ -36,7 +36,7 @@ module "deploy" {
   aws_account_id                  = data.aws_ssm_parameter.aws_account_id.value
   environment                     = local.environment
   availability_zones              = local.availability_zones
-  deletion_protection             = false
+  deletion_protection             = true
   skip_final_snapshot             = false
   enabled_cloudwatch_logs_exports = ["postgresql"]
   kms_cmk_rds_shared              = data.aws_ssm_parameter.kms_cmk_rds_shared.value
