@@ -45,6 +45,5 @@ module "deploy" {
   db_instance_class               = "db.r5.xlarge"
   spree_cluster_instances         = length(local.availability_zones)
   backup_retention_period         = 35
-  // TODO: needs to set to 'true' after issues resolved under SINF-407
-  es_encrypt_at_rest              = false
+  es_encrypt_at_rest              = true
 }

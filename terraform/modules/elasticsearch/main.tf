@@ -62,6 +62,10 @@ resource "aws_elasticsearch_domain" "main" {
     enabled = var.encrypt_at_rest
   }
 
+  node_to_node_encryption {
+    enabled = true
+  }
+
   depends_on = [
     aws_iam_service_linked_role.es,
   ]
@@ -92,6 +96,10 @@ resource "aws_elasticsearch_domain_policy" "main" {
     ]
 }
 POLICIES
+
+  depends_on = [
+    aws_elasticsearch_domain.main
+  ]
 }
 
 resource "aws_ssm_parameter" "es_url" {
